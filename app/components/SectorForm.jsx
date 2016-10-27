@@ -9,6 +9,7 @@ class SectorForm extends React.Component {
     this.modalDeleteShow = this.modalDeleteShow.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
     this.addSector = this.addSector.bind(this);
+    this.editSector = this.editSector.bind(this);
   }
 
   modalDeleteShow (event) {
@@ -42,6 +43,18 @@ class SectorForm extends React.Component {
     });
   }
 
+  editSector () {
+    this.props.dispatch({
+      type: 'sectors.editSector',
+      value: this.props.form.value,
+      sectors: this.props.sectors
+    });
+    this.props.dispatch({
+      type: 'form.valueChange',
+      value: ''
+    });
+  }
+
   render () {
     let selected = this.isSectorSelected();
 
@@ -55,6 +68,7 @@ class SectorForm extends React.Component {
     let EditButton = <RaisedButton
       label='Edit'
       fullWidth={true}
+      onTouchTap={this.editSector}
     />;
 
     let actionButton = selected ? EditButton : AddButton;

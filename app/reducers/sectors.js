@@ -10,18 +10,26 @@ export default function sectors (state = {}, action) {
         }
         return sector;
       });
-    case 'sectors.removeSector':
-      return state.filter((sector) => {
-        if (!sector.selected) {
-          return sector;
-        }
-      });
     case 'sectors.addSector':
       let newState = JSON.parse(JSON.stringify(state));
       let newSector = {id: action.sectors.length + 1, name: action.value, selected: false};
       newState.push(newSector);
 
       return newState;
+    case 'sectors.editSector':
+      let sectors = state.map((sector) => {
+        if (sector.selected) {
+          sector.name = action.value;
+        }
+        return sector;
+      });
+      return sectors;
+    case 'sectors.removeSector':
+      return state.filter((sector) => {
+        if (!sector.selected) {
+          return sector;
+        }
+      });
     default:
       return state;
   }

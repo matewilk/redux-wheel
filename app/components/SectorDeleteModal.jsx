@@ -24,6 +24,10 @@ class DeleteModal extends React.Component {
     this.props.dispatch({
       type: 'modal.modalDeleteToggle'
     });
+    this.props.dispatch({
+      type: 'form.valueChange',
+      value: ''
+    });
   }
 
   render () {

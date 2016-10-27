@@ -6,6 +6,7 @@ class Sector extends React.Component {
     super(props);
     this.selectSector = this.selectSector.bind(this);
   }
+
   render () {
     const sector = this.props.sector;
 
@@ -15,20 +16,16 @@ class Sector extends React.Component {
   }
 
   selectSector (event) {
-    const sector_id = Number(event.target.dataset.id);
-    const sector_name = event.target.innerHTML;
+    const sectorId = Number(event.target.dataset.id);
 
     this.props.dispatch({
       type: 'sector.selectSector',
-      id: sector_id,
-      sector: sector_name
+      id: sectorId
     });
 
     this.props.dispatch({
-      type: 'form.valueEdit',
-      id: sector_id,
-      sector: event.target.textContent,
-      form: this.props.form
+      type: 'form.valueChange',
+      value: this.props.sector.selected ? '' : this.props.sector.name
     });
   }
 }
@@ -41,7 +38,8 @@ Sector.propTypes = {
 // export the connected class
 function mapStateToProps (state) {
   return ({
-    form: state.form
+    form: state.form,
+    sectors: state.sectors
   });
 }
 export default connect(mapStateToProps)(Sector);
