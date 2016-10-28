@@ -53,6 +53,10 @@ class SectorForm extends React.Component {
       type: 'form.valueChange',
       value: ''
     });
+    this.props.dispatch({
+      type: 'sector.selectSector',
+      id: null
+    });
   }
 
   render () {

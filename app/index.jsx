@@ -15,7 +15,8 @@ let sectors = [];
 for (let i = 0; i < 10; i++) {
   sectors.push({
     id: i,
-    name: `Sector ${i}`,
+    name: `${(i + 1) * 100}`,
+    count: 10,
     selected: false
   });
 }

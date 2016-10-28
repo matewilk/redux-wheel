@@ -12,7 +12,12 @@ export default function sectors (state = {}, action) {
       });
     case 'sectors.addSector':
       let newState = JSON.parse(JSON.stringify(state));
-      let newSector = {id: action.sectors.length + 1, name: action.value, selected: false};
+      let newSector = {
+        id: action.sectors.length + 1,
+        name: action.value,
+        selected: false,
+        count: 10
+      };
       newState.push(newSector);
 
       return newState;

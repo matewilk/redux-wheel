@@ -1,22 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as d3 from 'd3';
 
 class Sector extends React.Component {
   constructor (props) {
     super(props);
     this.selectSector = this.selectSector.bind(this);
+    this.calculateTextTransform = this.calculateTextTransform.bind(this);
+
+    this.arc = d3.arc()
+      .outerRadius(45)
+      .innerRadius(20)
+      .cornerRadius(1);
   }
 
-  render () {
-    const sector = this.props.sector;
-
-    return (
-      <li onTouchTap={this.selectSector} data-id={sector.id}>{sector.name}, {JSON.stringify(sector.selected)}</li>
-    );
-  }
-
-  selectSector (event) {
-    const sectorId = Number(event.target.dataset.id);
+  selectSector () {
+    let sector = this.props.sector.data;
+    let sectorId = sector.id;
+    let selected = sector.selected;
+    let name = sector.name;
 
     this.props.dispatch({
       type: 'sector.selectSector',
@@ -25,8 +27,36 @@ class Sector extends React.Component {
 
     this.props.dispatch({
       type: 'form.valueChange',
-      value: this.props.sector.selected ? '' : this.props.sector.name
+      value: selected ? '' : name
     });
+  }
+
+  calculateTextTransform (d) {
+    let midAngle = d.startAngle / 2 + d.endAngle / 2;
+    let textTransform = `translate(${this.arc.centroid(d)}) rotate(${midAngle * 180 / Math.PI})`;
+
+    return textTransform;
+  }
+
+  render () {
+    let sector = this.props.sector;
+    let textTransform = this.calculateTextTransform(this.props.sector);
+    return (
+      <g onTouchTap={this.selectSector}>
+        <path
+          data-id={sector.id}
+          d={this.props.d}
+          fill={this.props.fill}
+        />
+        <text
+          fill='white'
+          transform={textTransform}
+          textAnchor='middle'
+          fontSize='6px'>
+          {sector.data.name}
+        </text>
+      </g>
+    );
   }
 }
 

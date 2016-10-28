@@ -7,7 +7,7 @@ class DeleteModal extends React.Component {
     super();
 
     this.handleClose = this.handleClose.bind(this);
-    this.removeSectors = this.removeSectors.bind(this);
+    this.removeSector = this.removeSector.bind(this);
   }
 
   handleClose () {
@@ -16,7 +16,7 @@ class DeleteModal extends React.Component {
     });
   }
 
-  removeSectors () {
+  removeSector () {
     this.props.dispatch({
       type: 'sectors.removeSector',
       sectors: this.props.sectors
@@ -41,7 +41,7 @@ class DeleteModal extends React.Component {
         label='Submit'
         keyboardFocused={true}
         primary={true}
-        onTouchTap={this.removeSectors}
+        onTouchTap={this.removeSector}
       />
     ];
 
