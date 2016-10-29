@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ReactTransitionGroup from 'react-addons-transition-group';
 import * as d3 from 'd3';
 
 import Sector from './Sector';
@@ -32,19 +33,37 @@ class Wheel extends React.Component {
     ]);
   }
 
+  componentDidMount () {
+    let add = (i) => {
+      return () => {
+        this.props.dispatch({
+          type: 'sectors.addSector',
+          value: `${(i + 1) * 100}`,
+          sectors: this.props.sectors
+        });
+      };
+    };
+    for (let i = 0; i < 10; i++) {
+      setTimeout(add(i), 500);
+    }
+  }
+
   render () {
     let transform = `translate(50, 50)`;
     return (
       <svg viewBox='0 0 100 100'>
         <g transform={transform}>
-          {this.pie(this.props.sectors).map((sector, index) => {
-            return <Sector
-              fill={this.color(index)}
-              key={index}
-              sector={sector}
-              d={this.arc(sector)}
-            />;
-          })}
+          <ReactTransitionGroup component='g'>
+            {this.pie(this.props.sectors).map((sector, index) => {
+              return <Sector
+                fill={this.color(index)}
+                key={index}
+                sector={sector}
+                d={this.arc(sector)}
+                dispatch={this.props.dispatch}
+              />;
+            })}
+          </ReactTransitionGroup>
         </g>
       </svg>
     );

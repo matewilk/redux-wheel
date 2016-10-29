@@ -70,7 +70,7 @@ class SectorForm extends React.Component {
       onTouchTap={this.addSector}
     />;
     let EditButton = <RaisedButton
-      label='Edit'
+      label='Update'
       fullWidth={true}
       onTouchTap={this.editSector}
     />;
