@@ -11,11 +11,7 @@ class Sector extends React.Component {
 
     this.selectSector = this.selectSector.bind(this);
     this.calculateTextTransform = this.calculateTextTransform.bind(this);
-
-    this.arc = d3.arc()
-      .outerRadius(45)
-      .innerRadius(20)
-      .cornerRadius(1);
+    this.onShowTransition = this.onShowTransition.bind(this);
 
     let transitionDuration = 400;
     this.onAppearTransition = d3.transition()
@@ -24,6 +20,9 @@ class Sector extends React.Component {
 
     this.onEnterTransition = d3.transition()
       .duration(transitionDuration).ease(d3.easeCubicInOut);
+
+    this.bounceTransition = d3.transition()
+      .duration(transitionDuration).ease(d3.easeBounceOut);
   }
 
   selectSector () {
@@ -43,44 +42,68 @@ class Sector extends React.Component {
     });
   }
 
-  componentWillEnter (callback) {
+  onShowTransition (transitionType, callback) {
     let node = d3.select(ReactDOM.findDOMNode(this));
 
-    node.transition(this.onEnterTransition)
-      .style('fill-opacity', 1)
+    node.transition(transitionType)
+      .style('fill-opacity', 0.9)
       .on('end', () => {
-        this.setState({fillOpacity: 1});
+        this.setState({fillOpacity: 0.9});
         callback();
       });
+  }
+
+  componentWillEnter (callback) {
+    this.onShowTransition(this.onEnterTransition, callback);
   }
 
   componentWillAppear (callback) {
-    let node = d3.select(ReactDOM.findDOMNode(this));
-
-    node.transition(this.onAppearTransition)
-      .style('fill-opacity', 1)
-      .on('end', () => {
-        this.setState({fillOpacity: 1});
-        callback();
-      });
+    this.onShowTransition(this.onAppearTransition, callback);
   }
 
   calculateTextTransform (d) {
+    let arc = this.props.arc;
     let midAngle = d.startAngle / 2 + d.endAngle / 2;
-    let textTransform = `translate(${this.arc.centroid(d)}) rotate(${midAngle * 180 / Math.PI})`;
+    let textTransform = `translate(${arc.centroid(d)}) rotate(${midAngle * 180 / Math.PI})`;
 
     return textTransform;
+  }
+
+  componentWillReceiveProps (nextProps) {
+    let node = d3.select(ReactDOM.findDOMNode(this));
+    let selected = nextProps.sector.data.selected;
+    let opacity = selected ? 1 : 0.9;
+
+    node.transition(this.onEnterTransition)
+      .style('fill-opacity', opacity)
+      .on('end', () => {
+        this.setState({fillOpacity: opacity});
+      });
+
+    node.transition(this.onEnterTransition)
+      .ease(d3.easeBounceOut)
+      .attr('transform', (d) => {
+        if (selected) {
+          let dist = 3;
+          let midAngle = ((nextProps.sector.endAngle - nextProps.sector.startAngle) / 2) + nextProps.sector.startAngle;
+          var x = Math.sin(midAngle) * dist;
+          var y = -Math.cos(midAngle) * dist;
+          return 'translate(' + x + ',' + y + ')';
+        } else {
+          return 'translate(0, 0)';
+        }
+      });
   }
 
   render () {
     let sector = this.props.sector.data;
     let textTransform = this.calculateTextTransform(this.props.sector);
-    let d = this.arc(this.props.sector);
+
     return (
       <g onTouchTap={this.selectSector} fillOpacity={this.state.fillOpacity}>
         <path
           data-id={sector.id}
-          d={d}
+          d={this.props.d}
           fill={this.props.fill}
         />
         <text

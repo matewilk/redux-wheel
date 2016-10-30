@@ -47,6 +47,7 @@ class Wheel extends React.Component {
                 d={this.arc(sector)}
                 dispatch={this.props.dispatch}
                 index={index}
+                arc={this.arc}
               />;
             })}
           </ReactTransitionGroup>

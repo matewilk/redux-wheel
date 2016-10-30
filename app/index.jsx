@@ -16,7 +16,8 @@ for (let i = 0; i < 5; i++) {
   sectors.push({
     count: 10,
     name: `${(i + 1) * 10}`,
-    id: i
+    id: i,
+    selected: false
   });
 }
 let modal = {
