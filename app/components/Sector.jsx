@@ -17,8 +17,13 @@ class Sector extends React.Component {
       .innerRadius(20)
       .cornerRadius(1);
 
-    this.transition = d3.transition()
-      .duration(500).ease(d3.easeCubicInOut);
+    let transitionDuration = 400;
+    this.onAppearTransition = d3.transition()
+      .delay(transitionDuration * (props.sector.data.id + 1))
+      .duration(transitionDuration);
+
+    this.onEnterTransition = d3.transition()
+      .duration(transitionDuration).ease(d3.easeCubicInOut);
   }
 
   selectSector () {
@@ -41,7 +46,18 @@ class Sector extends React.Component {
   componentWillEnter (callback) {
     let node = d3.select(ReactDOM.findDOMNode(this));
 
-    node.transition(this.transition)
+    node.transition(this.onEnterTransition)
+      .style('fill-opacity', 1)
+      .on('end', () => {
+        this.setState({fillOpacity: 1});
+        callback();
+      });
+  }
+
+  componentWillAppear (callback) {
+    let node = d3.select(ReactDOM.findDOMNode(this));
+
+    node.transition(this.onAppearTransition)
       .style('fill-opacity', 1)
       .on('end', () => {
         this.setState({fillOpacity: 1});
@@ -59,11 +75,12 @@ class Sector extends React.Component {
   render () {
     let sector = this.props.sector.data;
     let textTransform = this.calculateTextTransform(this.props.sector);
+    let d = this.arc(this.props.sector);
     return (
       <g onTouchTap={this.selectSector} fillOpacity={this.state.fillOpacity}>
         <path
           data-id={sector.id}
-          d={this.props.d}
+          d={d}
           fill={this.props.fill}
         />
         <text

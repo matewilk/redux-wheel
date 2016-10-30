@@ -33,21 +33,6 @@ class Wheel extends React.Component {
     ]);
   }
 
-  componentDidMount () {
-    let add = (i) => {
-      return () => {
-        this.props.dispatch({
-          type: 'sectors.addSector',
-          value: `${(i + 1) * 100}`,
-          sectors: this.props.sectors
-        });
-      };
-    };
-    for (let i = 0; i < 10; i++) {
-      setTimeout(add(i), 500);
-    }
-  }
-
   render () {
     let transform = `translate(50, 50)`;
     return (
@@ -61,6 +46,7 @@ class Wheel extends React.Component {
                 sector={sector}
                 d={this.arc(sector)}
                 dispatch={this.props.dispatch}
+                index={index}
               />;
             })}
           </ReactTransitionGroup>
