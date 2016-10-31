@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import App from './components/App';
 import { reducers } from './reducers/index';
+
+import startIO, { sectorsMiddleware } from './middleware/sectors';
 
 // Needed for onTouchTap
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -29,7 +31,10 @@ let form = {
 
 const initial_state = { sectors, modal, form };
 // create the store
-const store = createStore(reducers, initial_state);
+const createStoreWithMiddleware = applyMiddleware(sectorsMiddleware)(createStore);
+const store = createStoreWithMiddleware(reducers, initial_state);
+
+startIO(store);
 
 // render the main component
 ReactDOM.render(

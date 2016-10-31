@@ -10,7 +10,7 @@ export default function sectors (state = {}, action) {
         }
         return sector;
       });
-    case 'sectors.addSector':
+    case 'sectors.addSectorLocal':
       let newState = JSON.parse(JSON.stringify(state));
       let newSector = {
         id: action.sectors.length + 1,
