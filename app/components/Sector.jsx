@@ -32,7 +32,7 @@ class Sector extends React.Component {
     let name = sector.name;
 
     this.props.dispatch({
-      type: 'sector.selectSector',
+      type: 'sectors.selectSector',
       id: sectorId
     });
 

@@ -54,7 +54,7 @@ class SectorForm extends React.Component {
       value: ''
     });
     this.props.dispatch({
-      type: 'sector.selectSector',
+      type: 'sectors.selectSector',
       id: null
     });
   }

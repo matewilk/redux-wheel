@@ -6,7 +6,13 @@ export function sectorsMiddleware (store) {
   return (next) => (action) => {
     let result = next(action);
 
-    if (socket && action.type === 'sectors.addSector') {
+    if (socket 
+        && (action.type === 'sectors.addSector' 
+            || action.type === 'sectors.removeSector'
+            || action.type === 'sectors.selectSector'
+            || action.type === 'sectors.editSector'
+            )
+        ) {
       let actionParams = action;
       socket.emit('client-emit', actionParams);
     }
@@ -20,10 +26,9 @@ export default function (store) {
   socket.emit('join', {room: 'abc'});
 
   socket.on('server-emit', actionParams => {
-    store.dispatch({
-      type: 'sectors.addSectorLocal',
-      value: actionParams.value,
-      sectors: actionParams.sectors
-    });
+    let type, params;
+    let test = { type, ...params } = actionParams;
+    test.type = `${type}Local`
+    store.dispatch(test);
   });
 }

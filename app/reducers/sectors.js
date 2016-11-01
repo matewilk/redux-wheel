@@ -1,6 +1,6 @@
 export default function sectors (state = {}, action) {
   switch (action.type) {
-    case 'sector.selectSector':
+    case 'sectors.selectSectorLocal':
       return state.map((sector) => {
         sector = Object.assign({}, sector);
         if (sector.id === action.id) {
@@ -13,7 +13,7 @@ export default function sectors (state = {}, action) {
     case 'sectors.addSectorLocal':
       let newState = JSON.parse(JSON.stringify(state));
       let newSector = {
-        id: action.sectors.length + 1,
+        id: (Math.random() * (9999 - 10) + 10),
         name: action.value,
         selected: false,
         count: 10
@@ -21,7 +21,7 @@ export default function sectors (state = {}, action) {
       newState.push(newSector);
 
       return newState;
-    case 'sectors.editSector':
+    case 'sectors.editSectorLocal':
       let sectors = state.map((sector) => {
         if (sector.selected) {
           sector.name = action.value;
@@ -29,7 +29,7 @@ export default function sectors (state = {}, action) {
         return sector;
       });
       return sectors;
-    case 'sectors.removeSector':
+    case 'sectors.removeSectorLocal':
       return state.filter((sector) => {
         if (!sector.selected) {
           return sector;
