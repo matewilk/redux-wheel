@@ -6,14 +6,13 @@ export function sectorsMiddleware (store) {
   return (next) => (action) => {
     let result = next(action);
 
-    if (socket 
-        && (action.type === 'sectors.addSector' 
-            || action.type === 'sectors.removeSector'
-            || action.type === 'sectors.selectSector'
-            || action.type === 'sectors.editSector'
-            )
-        ) {
+    if (socket && action.type.match(/^((?=sectors))((?!Local).)*$/)) {
       let actionParams = action;
+
+      if (action.type === 'sectors.addSector') {
+        action.id = (Math.random() * (9999 - 10) + 10)
+      }
+      
       socket.emit('client-emit', actionParams);
     }
 

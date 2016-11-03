@@ -13,7 +13,7 @@ export default function sectors (state = {}, action) {
     case 'sectors.addSectorLocal':
       let newState = JSON.parse(JSON.stringify(state));
       let newSector = {
-        id: (Math.random() * (9999 - 10) + 10),
+        id: action.id,
         name: action.value,
         selected: false,
         count: 10
