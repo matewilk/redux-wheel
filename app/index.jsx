@@ -28,8 +28,11 @@ let modal = {
 let form = {
   value: ''
 };
+let spinning = {
+  speed: 0
+}
 
-const initial_state = { sectors, modal, form };
+const initial_state = { sectors, modal, form, spinning };
 // create the store
 const createStoreWithMiddleware = applyMiddleware(sectorsMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducers, initial_state);

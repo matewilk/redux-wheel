@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactTransitionGroup from 'react-addons-transition-group';
+import { RaisedButton } from 'material-ui';
 import * as d3 from 'd3';
 
 import Sector from './Sector';
+import Spin from './Spin';
 
 class Wheel extends React.Component {
   constructor () {
@@ -20,24 +22,62 @@ class Wheel extends React.Component {
       .cornerRadius(1);
 
     this.color = d3.scaleOrdinal([
-      '#E53935',
-      '#D81B60',
-      '#8E24AA',
-      '#5E35B1',
       '#3949AB',
       '#1E88E5',
       '#039BE5',
       '#00ACC1',
-      '#00897B',
-      '#43A047'
+      '#8E24AA'
     ]);
+
+    this.initialTheta = 0;
+    this.thetaDelta = 0.1;
+    this.speedContraction = 0.5;
+
+    this.spin = this.spin.bind(this);
+    this.animateSpin = this.animateSpin.bind(this);
+    this.handleSpin = this.handleSpin.bind(this);
+  }
+
+  componentDidMount () {
+    this.wheel = document.getElementById('wheel');
+    this.requestAnimationFrameID;
+    this.currentTheta = this.initialTheta;
+  }
+
+  handleSpin () {
+    this.props.dispatch({
+      type: 'spinning.spin',
+    });
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.spinning.speed > 0) {
+      this.spin();
+    }
+  }
+
+  spin () {
+    this.requestAnimationFrameID = window.requestAnimationFrame(this.animateSpin);
+  }
+
+  animateSpin () {
+      if (this.props.spinning.speed < this.speedContraction) {
+        clearInterval(this.requestAnimationFrameID);
+        return;
+      }
+
+      this.wheel.setAttribute('transform', `translate(50, 50) rotate(${this.currentTheta})`);
+      this.currentTheta += this.thetaDelta * this.props.spinning.speed;
+      this.props.spinning.speed = this.props.spinning.speed - this.speedContraction;
+      this.requestAnimationFrameID = window.requestAnimationFrame(this.animateSpin); 
   }
 
   render () {
-    let transform = `translate(50, 50)`;
+    // let transform = `translate(50, 50)`;
     return (
       <svg viewBox='0 0 100 100'>
-        <g transform={transform}>
+        <g id='wheel' transform='translate(50, 50)'>
+          <Spin spinHandler={this.handleSpin} />
           <ReactTransitionGroup component='g'>
             {this.pie(this.props.sectors).map((sector, index) => {
               return <Sector
@@ -60,7 +100,8 @@ class Wheel extends React.Component {
 // export the connected class
 function mapStateToProps (state) {
   return ({
-    sectors: state.sectors
+    sectors: state.sectors,
+    spinning: state.spinning
   });
 }
 export default connect(mapStateToProps)(Wheel);
