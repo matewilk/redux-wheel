@@ -100,7 +100,11 @@ class Sector extends React.Component {
     let textTransform = this.calculateTextTransform(this.props.sector);
 
     return (
-      <g onTouchTap={this.selectSector} fillOpacity={this.state.fillOpacity}>
+      <g 
+        onTouchTap={this.selectSector} 
+        fillOpacity={this.state.fillOpacity}
+        style={{cursor: 'pointer'}}
+      >
         <path
           data-id={sector.id}
           d={this.props.d}

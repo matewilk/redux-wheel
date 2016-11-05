@@ -7,6 +7,11 @@ export default function modal (state = {}, action) {
       newState.speed = action.speed;
 
       return newState;
+    case 'spinning.stop':
+      newState = JSON.parse(JSON.stringify(state));
+      newState.inMotion = false;
+
+      return newState;
     default:
       return state;
   }

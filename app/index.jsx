@@ -29,7 +29,8 @@ let form = {
   value: ''
 };
 let spinning = {
-  speed: 0
+  speed: 0,
+  inMotion: false
 }
 
 const initial_state = { sectors, modal, form, spinning };
