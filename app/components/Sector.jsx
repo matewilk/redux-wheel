@@ -26,20 +26,23 @@ class Sector extends React.Component {
   }
 
   selectSector () {
-    let sector = this.props.sector.data;
-    let sectorId = sector.id;
-    let selected = sector.selected;
-    let name = sector.name;
+    // trigger only if the wheel is not in motion 
+    if(!this.props.inMotion) {
+      let sector = this.props.sector.data;
+      let sectorId = sector.id;
+      let selected = sector.selected;
+      let name = sector.name;
 
-    this.props.dispatch({
-      type: 'sectors.selectSector',
-      id: sectorId
-    });
+      this.props.dispatch({
+        type: 'sectors.selectSector',
+        id: sectorId
+      });
 
-    this.props.dispatch({
-      type: 'form.valueChange',
-      value: selected ? '' : name
-    });
+      this.props.dispatch({
+        type: 'form.valueChange',
+        value: selected ? '' : name
+      });
+    }
   }
 
   onShowTransition (transitionType, callback) {

@@ -96,6 +96,7 @@ class Wheel extends React.Component {
                 sector={sector}
                 d={this.arc(sector)}
                 dispatch={this.props.dispatch}
+                inMotion={this.props.spinning.inMotion}
                 index={index}
                 arc={this.arc}
               />;

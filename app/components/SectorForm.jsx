@@ -10,6 +10,7 @@ class SectorForm extends React.Component {
     this.onValueChange = this.onValueChange.bind(this);
     this.addSector = this.addSector.bind(this);
     this.editSector = this.editSector.bind(this);
+    this.isWheelInMotion = this.isWheelInMotion.bind(this);
   }
 
   modalDeleteShow (event) {
@@ -22,6 +23,10 @@ class SectorForm extends React.Component {
     return this.props.sectors.some((sector) => {
       return sector.selected === true;
     });
+  }
+
+  isWheelInMotion () {
+    return this.props.spinning.inMotion;
   }
 
   onValueChange (element, value) {
@@ -61,18 +66,20 @@ class SectorForm extends React.Component {
 
   render () {
     let selected = this.isSectorSelected();
+    let wheelInMotion = this.isWheelInMotion();
 
     let AddButton = <RaisedButton
       label='Add'
       fullWidth={true}
       primary={true}
-      disabled={this.props.form.value === ''}
+      disabled={this.props.form.value === '' || wheelInMotion}
       onTouchTap={this.addSector}
     />;
     let EditButton = <RaisedButton
       label='Update'
       fullWidth={true}
       onTouchTap={this.editSector}
+      disabled={wheelInMotion}
     />;
 
     let actionButton = selected ? EditButton : AddButton;
@@ -84,6 +91,7 @@ class SectorForm extends React.Component {
           value={this.props.form.value}
           floatingLabelText='Amount'
           onChange={this.onValueChange}
+          disabled={wheelInMotion}
         />
         <Row between='xs' style={{width: 'none', maxWidth: 'none'}}>
           <Col xs={6}>
@@ -95,7 +103,7 @@ class SectorForm extends React.Component {
               fullWidth={true}
               secondary={true}
               onTouchTap={this.modalDeleteShow}
-              disabled={!selected}
+              disabled={!selected || wheelInMotion}
             />
           </Col>
         </Row>
@@ -108,7 +116,8 @@ class SectorForm extends React.Component {
 function mapStateToProps (state) {
   return ({
     form: state.form,
-    sectors: state.sectors
+    sectors: state.sectors,
+    spinning: state.spinning
   });
 }
 export default connect(mapStateToProps)(SectorForm);

@@ -7,7 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import App from './components/App';
 import { reducers } from './reducers/index';
 
-import startIO, { sectorsMiddleware } from './middleware/sectors';
+import socketIO, { sectorsMiddleware } from './middleware/socketio';
 
 // Needed for onTouchTap
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -38,7 +38,7 @@ const initial_state = { sectors, modal, form, spinning };
 const createStoreWithMiddleware = applyMiddleware(sectorsMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducers, initial_state);
 
-startIO(store);
+socketIO(store);
 
 // render the main component
 ReactDOM.render(
