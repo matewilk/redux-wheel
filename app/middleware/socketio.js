@@ -36,9 +36,8 @@ export function sectorsMiddleware (store) {
   };
 }
 
-export default function (store) {
-  socket = io('http://localhost:3000');
-  socket.emit('join', {room: 'abc'});
+export default function (store, socketio) {
+  socket = socketio;
 
   socket.on('server-emit', actionParams => {
     let type, params;

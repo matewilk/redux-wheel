@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, hashHistory } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -7,6 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import App from './components/App';
 import { reducers } from './reducers/index';
 
+import io from 'socket.io-client';
 import socketIO, { sectorsMiddleware } from './middleware/socketio';
 
 // Needed for onTouchTap
@@ -38,13 +40,16 @@ const initial_state = { sectors, modal, form, spinning };
 const createStoreWithMiddleware = applyMiddleware(sectorsMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducers, initial_state);
 
-socketIO(store);
+let socket = io('http://localhost:3000');
+socketIO(store, socket);
 
 // render the main component
 ReactDOM.render(
   <MuiThemeProvider>
     <Provider store={store}>
-      <App />
+      <Router history={hashHistory}>
+        <Route path='/(:boardId)' socket={socket} component={App} />
+      </Router>
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('app')

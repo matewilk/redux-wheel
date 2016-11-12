@@ -83,10 +83,10 @@ class Wheel extends React.Component {
   }
 
   render () {
-    // let transform = `translate(50, 50)`;
+    let transform = `translate(50, 50)`;
     return (
       <svg viewBox='0 0 100 100'>
-        <g id='wheel' transform='translate(50, 50)'>
+        <g id='wheel' transform={transform}>
           <Spin spinHandler={this.handleSpin} spinning={this.props.spinning}/>
           <ReactTransitionGroup component='g'>
             {this.pie(this.props.sectors).map((sector, index) => {
