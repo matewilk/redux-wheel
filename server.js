@@ -12,17 +12,17 @@ let io = require('socket.io')(server);
 io.sockets.on('connection', function (socket) {
   console.log('client connected');
 
-  let room;
+  let board;
   socket.on('join', function (data) {
-    room = data.room;
-    console.log(room);
-    socket.join(room);
+    board = data.board;
+    console.log(board);
+    socket.join(board);
   });
 
   socket.on('client-emit', (params) => {
     console.log(params);
-    console.log(room);
-    io.sockets.in(room).emit('server-emit', params);
+    console.log(board);
+    io.sockets.in(board).emit('server-emit', params);
   });
 
   socket.on('disconnect', () => {

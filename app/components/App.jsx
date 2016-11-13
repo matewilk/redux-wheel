@@ -1,10 +1,10 @@
 import React from 'react';
-// import io from 'socket.io-client';
+import { connect } from 'react-redux';
 import {Row, Col} from 'react-flexbox-grid/lib/index';
 
 import MainCard from './MainCard';
 
-export default class App extends React.Component {
+class App extends React.Component {
 
   generateBoardId () {
     if (this.props.params.boardId) {
@@ -19,7 +19,12 @@ export default class App extends React.Component {
 
   componentDidMount () {
     let socket = this.props.route.socket;
-    socket.emit('join', {room: this.generateBoardId()});
+    let boardId = this.generateBoardId();
+    socket.emit('join', {board: boardId});
+    this.props.dispatch({
+      type: 'form.setBoardId',
+      boardId: boardId
+    });
   }
 
   componentWillReceiveProps (nextProps) {
@@ -38,3 +43,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default connect()(App);

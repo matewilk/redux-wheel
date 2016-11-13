@@ -28,7 +28,8 @@ let modal = {
   open: false
 };
 let form = {
-  value: ''
+  value: '',
+  link: ''
 };
 let spinning = {
   speed: 0,
