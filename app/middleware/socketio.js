@@ -44,5 +44,7 @@ export default function (store, socketio) {
     let test = { type, ...params } = actionParams;
     test.type = `${type}Local`
     store.dispatch(test);
+
+    socket.emit('state', store.getState());
   });
 }
