@@ -29,7 +29,6 @@ class Wheel extends React.Component {
       '#8E24AA'
     ]);
 
-    this.initialTheta = 0;
     this.thetaDelta = 0.1;
     this.speedContraction = 0.5;
 
@@ -37,15 +36,20 @@ class Wheel extends React.Component {
     this.animateSpin = this.animateSpin.bind(this);
     this.handleSpin = this.handleSpin.bind(this);
     this.calculateWheelRotationAngle = this.calculateWheelRotationAngle.bind(this);
+
+    this.state = {
+      actionOwner: false
+    }
   }
 
   componentDidMount () {
     this.wheel = document.getElementById('wheel');
     this.requestAnimationFrameID;
-    this.currentTheta = this.initialTheta;
   }
 
   handleSpin () {
+    this.state.actionOwner = true;
+
     this.props.dispatch({
       type: 'spinning.spin',
     });
@@ -62,8 +66,8 @@ class Wheel extends React.Component {
   }
 
   calculateWheelRotationAngle () {
-    this.wheel.setAttribute('transform', `translate(50, 50) rotate(${this.currentTheta})`);
-      this.currentTheta += this.thetaDelta * this.props.spinning.speed;
+    this.wheel.setAttribute('transform', `translate(50, 50) rotate(${this.props.spinning.theta})`);
+      this.props.spinning.theta += this.thetaDelta * this.props.spinning.speed;
       this.props.spinning.speed = this.props.spinning.speed - this.speedContraction;
   }
 
@@ -72,8 +76,12 @@ class Wheel extends React.Component {
         clearInterval(this.requestAnimationFrameID);
 
         this.props.dispatch({
-          type: 'spinning.stop'
+          type: 'spinning.stop',
+          theta: this.props.spinning.theta,
+          actionOwner: this.state.actionOwner
         });
+
+        this.state.actionOwner = false;
 
         return;
       }
@@ -83,7 +91,7 @@ class Wheel extends React.Component {
   }
 
   render () {
-    let transform = `translate(50, 50)`;
+    let transform = `translate(50, 50) rotate(${this.props.spinning.theta})`;
     return (
       <svg viewBox='0 0 100 100'>
         <g id='wheel' transform={transform}>

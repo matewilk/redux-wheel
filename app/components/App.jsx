@@ -20,11 +20,20 @@ class App extends React.Component {
   componentDidMount () {
     let socket = this.props.route.socket;
     let boardId = this.generateBoardId();
+
     socket.emit('join', {board: boardId});
+
     this.props.dispatch({
       type: 'form.setBoardId',
       boardId: boardId
     });
+
+    socket.on('sync', (theta) => {
+      this.props.dispatch({
+        type: 'spinning.sync',
+        theta: theta
+      });
+    })
   }
 
   componentWillReceiveProps (nextProps) {

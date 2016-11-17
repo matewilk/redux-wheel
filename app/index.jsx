@@ -33,6 +33,7 @@ let form = {
 };
 let spinning = {
   speed: 0,
+  theta: 0,
   inMotion: false
 }
 

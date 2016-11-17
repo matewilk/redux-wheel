@@ -13,7 +13,7 @@ let boards = {};
 
 let addBoard = (boardId) => {
   if (!boards[boardId]) {
-    boards[boardId] = {};
+    boards[boardId] = { theta: 0};
   }
 }
 
@@ -34,6 +34,12 @@ let removeUser = (userId) => {
   });
 }
 
+let setCurrentTheta = (boardId, theta) => {
+  if (boards[boardId]) {
+    boards[boardId].theta = theta;
+  }
+}
+
 // socket events
 let io = require('socket.io')(server);
 
@@ -49,17 +55,19 @@ io.sockets.on('connection', function (socket) {
     addUserToBoard(board, socket.id);
 
     socket.join(board);
+
+    io.sockets.in(board).emit('sync', boards[board].theta);
   });
 
   socket.on('client-emit', (params) => {
     console.log(params);
     console.log(boards);
 
-    io.sockets.in(board).emit('server-emit', params);
-  });
+    if (params.type === 'spinning.stop' && params.actionOwner) {
+      setCurrentTheta(board, params.theta);
+    }
 
-  socket.on('state', (state) => {
-    console.log(state);
+    io.sockets.in(board).emit('server-emit', params);
   });
 
   socket.on('disconnect', () => {
