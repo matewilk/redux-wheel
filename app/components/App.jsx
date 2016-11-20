@@ -5,6 +5,13 @@ import {Row, Col} from 'react-flexbox-grid/lib/index';
 import MainCard from './MainCard';
 
 class App extends React.Component {
+  constructor () {
+    super();
+
+    this.state = {
+      loaded: false
+    }
+  }
 
   generateBoardId () {
     if (this.props.params.boardId) {
@@ -28,12 +35,19 @@ class App extends React.Component {
       boardId: boardId
     });
 
-    socket.on('sync', (theta) => {
+    socket.on('sync', (syncData) => {
+      // this.setState({loaded: true});
+
       this.props.dispatch({
         type: 'spinning.sync',
-        theta: theta
+        theta: syncData.theta
       });
-    })
+
+      this.props.dispatch({
+        type: 'sectors.sync',
+        sectors: syncData.sectors
+      });
+    });
   }
 
   componentWillReceiveProps (nextProps) {
@@ -43,6 +57,7 @@ class App extends React.Component {
   }
 
   render () {
+    // let comp = this.state.loaded ? <MainCard /> : 'Loading ...';
     return (
       <Row center='xs'>
         <Col xs={12} sm={10} md={10} lg={8}>

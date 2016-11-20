@@ -38,7 +38,7 @@ class BoardLink extends React.Component {
             <Col xs={6}>
               <TextField
                 fullWidth={true}
-                value={this.props.form.link}
+                value={`http://rinse.space/${this.props.form.boardId}`}
                 floatingLabelText='Your Link'
                 disabled={false}
                 onChange={this.onChange}

@@ -13,7 +13,7 @@ export default function modal (state = {}, action) {
       return new_state;
     case 'form.setBoardId':
       new_state = JSON.parse(JSON.stringify(state));
-      new_state.link = `http://rinse.space/${action.boardId}`;
+      new_state.boardId = action.boardId;
 
       return new_state;
     default:

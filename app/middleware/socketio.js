@@ -6,8 +6,11 @@ export function sectorsMiddleware (store) {
   return (next) => (action) => {
     let result = next(action);
 
-    //block sending io events if the wheel is in motion
     let inMotion = store.getState().spinning.inMotion;
+    let boardId = store.getState().form.boardId;
+    action.boardId = boardId;
+
+    //block sending io events if the wheel is in motion
     if (!inMotion) {
       // sectors events
       if (socket && action.type.match(/^((?=sectors))((?!Local).)*$/)) {

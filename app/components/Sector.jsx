@@ -15,7 +15,7 @@ class Sector extends React.Component {
 
     let transitionDuration = 400;
     this.onAppearTransition = d3.transition()
-      .delay(transitionDuration * (props.sector.data.id + 1))
+      // .delay(transitionDuration * (props.sector.data.id + 1))
       .duration(transitionDuration);
 
     this.onEnterTransition = d3.transition()

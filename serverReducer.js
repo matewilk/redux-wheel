@@ -1,6 +1,6 @@
-export default function sectors (state = {}, action) {
+module.exports = function sectors (state = {}, action) {
   switch (action.type) {
-    case 'sectors.selectSectorLocal':
+    case 'sectors.selectSector':
       return state.map((sector) => {
         sector = Object.assign({}, sector);
         if (sector.id === action.id) {
@@ -10,7 +10,7 @@ export default function sectors (state = {}, action) {
         }
         return sector;
       });
-    case 'sectors.addSectorLocal':
+    case 'sectors.addSector':
       let newState = JSON.parse(JSON.stringify(state));
       let newSector = {
         id: action.id,
@@ -21,7 +21,7 @@ export default function sectors (state = {}, action) {
       newState.push(newSector);
 
       return newState;
-    case 'sectors.editSectorLocal':
+    case 'sectors.editSector':
       let sectors = state.map((sector) => {
         if (sector.selected) {
           sector.name = action.value;
@@ -29,17 +29,12 @@ export default function sectors (state = {}, action) {
         return sector;
       });
       return sectors;
-    case 'sectors.removeSectorLocal':
+    case 'sectors.removeSector':
       return state.filter((sector) => {
         if (!sector.selected) {
           return sector;
         }
       });
-    case 'sectors.sync':
-      newState = JSON.parse(JSON.stringify(state));
-      newState = action.sectors;
-
-      return newState;
     default:
       return state;
   }

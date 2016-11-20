@@ -13,7 +13,18 @@ let boards = {};
 
 let addBoard = (boardId) => {
   if (!boards[boardId]) {
-    boards[boardId] = { theta: 0};
+    let sectors = [
+      { count: 10, id: 0, name: "10", selected: false },
+      { count: 10, id: 1, name: "20", selected: false },
+      { count: 10, id: 2, name: "30", selected: false },
+      { count: 10, id: 3, name: "40", selected: false },
+      { count: 10, id: 4, name: "50", selected: false }
+    ];
+
+    boards[boardId] = { 
+      theta: 0,
+      sectors: sectors
+    };
   }
 }
 
@@ -42,11 +53,9 @@ let setCurrentTheta = (boardId, theta) => {
 
 // socket events
 let io = require('socket.io')(server);
+let serverReducer = require('./serverReducer');
 
 io.sockets.on('connection', function (socket) {
-  console.log('client connected');
-  console.log(`client id: ${socket.id}`);
-
   let board;
   socket.on('join', function (data) {
     // add board
@@ -54,25 +63,27 @@ io.sockets.on('connection', function (socket) {
     addBoard(board);
     addUserToBoard(board, socket.id);
 
-    socket.join(board);
-
-    io.sockets.in(board).emit('sync', boards[board].theta);
+    socket.join(board, () => {
+      io.sockets.in(board).emit('sync', {
+          theta: boards[board].theta,
+          sectors: boards[board].sectors
+        }
+      );
+    });
   });
 
   socket.on('client-emit', (params) => {
-    console.log(params);
-    console.log(boards);
-
     if (params.type === 'spinning.stop' && params.actionOwner) {
       setCurrentTheta(board, params.theta);
     }
+
+    // save current board's sectors state
+    boards[params.boardId].sectors = serverReducer(boards[params.boardId].sectors, params);
 
     io.sockets.in(board).emit('server-emit', params);
   });
 
   socket.on('disconnect', () => {
-    console.log('client disconnected');
     removeUser(socket.id);
-    console.log(boards);
   });
 });
