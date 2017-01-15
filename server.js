@@ -65,10 +65,9 @@ io.sockets.on('connection', function (socket) {
 
     socket.join(board, () => {
       io.sockets.in(board).emit('sync', {
-          theta: boards[board].theta,
-          sectors: boards[board].sectors
-        }
-      );
+        theta: boards[board].theta,
+        sectors: boards[board].sectors
+      });
     });
   });
 

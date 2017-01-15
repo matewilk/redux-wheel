@@ -10,7 +10,7 @@ export function sectorsMiddleware (store) {
     let boardId = store.getState().form.boardId;
     action.boardId = boardId;
 
-    //block sending io events if the wheel is in motion
+    // block sending io events if the wheel is in motion
     if (!inMotion) {
       // sectors events
       if (socket && action.type.match(/^((?=sectors))((?!Local).)*$/)) {
@@ -45,8 +45,8 @@ export default function (store, socketio) {
 
   socket.on('server-emit', actionParams => {
     let type, params;
-    let test = { type, ...params } = actionParams;
-    test.type = `${type}Local`
-    store.dispatch(test);
+    let action = { type, ...params } = actionParams;
+    action.type = `${type}Local`;
+    store.dispatch(action);
   });
 }

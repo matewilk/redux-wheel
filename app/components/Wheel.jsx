@@ -66,27 +66,27 @@ class Wheel extends React.Component {
 
   calculateWheelRotationAngle () {
     this.wheel.setAttribute('transform', `translate(50, 50) rotate(${this.props.spinning.theta})`);
-      this.props.spinning.theta += this.thetaDelta * this.props.spinning.speed;
-      this.props.spinning.speed = this.props.spinning.speed - this.speedContraction;
+    this.props.spinning.theta += this.thetaDelta * this.props.spinning.speed;
+    this.props.spinning.speed = this.props.spinning.speed - this.speedContraction;
   }
 
   animateSpin () {
-      if (this.props.spinning.speed < this.speedContraction) {
-        clearInterval(this.requestAnimationFrameID);
+    if (this.props.spinning.speed < this.speedContraction) {
+      clearInterval(this.requestAnimationFrameID);
 
-        this.props.dispatch({
-          type: 'spinning.stop',
-          theta: this.props.spinning.theta,
-          actionOwner: this.state.actionOwner
-        });
+      this.props.dispatch({
+        type: 'spinning.stop',
+        theta: this.props.spinning.theta,
+        actionOwner: this.state.actionOwner
+      });
 
-        this.state.actionOwner = false;
+      this.state.actionOwner = false;
 
-        return;
-      }
+      return;
+    }
 
-      this.calculateWheelRotationAngle();
-      this.requestAnimationFrameID = window.requestAnimationFrame(this.animateSpin);
+    this.calculateWheelRotationAngle();
+    this.requestAnimationFrameID = window.requestAnimationFrame(this.animateSpin);
   }
 
   render () {
@@ -94,7 +94,7 @@ class Wheel extends React.Component {
     return (
       <svg viewBox='0 0 100 100'>
         <g id='wheel' transform={transform}>
-          <Spin spinHandler={this.handleSpin} spinning={this.props.spinning}/>
+          <Spin spinHandler={this.handleSpin} spinning={this.props.spinning} />
           <ReactTransitionGroup component='g'>
             {this.pie(this.props.sectors).map((sector, index) => {
               return <Sector

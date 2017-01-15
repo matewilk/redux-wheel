@@ -95,7 +95,7 @@ class SectorForm extends React.Component {
         />
         <Row between='xs' style={{width: 'none', maxWidth: 'none'}}>
           <Col xs={6}>
-            { actionButton }
+            {actionButton}
           </Col>
           <Col xs={6}>
             <RaisedButton

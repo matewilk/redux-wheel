@@ -26,8 +26,8 @@ class Sector extends React.Component {
   }
 
   selectSector () {
-    // trigger only if the wheel is not in motion 
-    if(!this.props.inMotion) {
+    // trigger only if the wheel is not in motion
+    if (!this.props.inMotion) {
       let sector = this.props.sector.data;
       let sectorId = sector.id;
       let selected = sector.selected;
@@ -73,29 +73,31 @@ class Sector extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let node = d3.select(ReactDOM.findDOMNode(this));
-    let selected = nextProps.sector.data.selected;
-    let opacity = selected ? 1 : 0.9;
+    if (this.props.sector.data.selected !== nextProps.sector.data.selected) {
+      let node = d3.select(ReactDOM.findDOMNode(this));
+      let selected = nextProps.sector.data.selected;
+      let opacity = selected ? 1 : 0.9;
 
-    node.transition(this.onEnterTransition)
-      .style('fill-opacity', opacity)
-      .on('end', () => {
-        this.setState({fillOpacity: opacity});
-      });
+      node.transition(this.onEnterTransition)
+        .style('fill-opacity', opacity)
+        .on('end', () => {
+          this.setState({fillOpacity: opacity});
+        });
 
-    node.transition(this.onEnterTransition)
-      .ease(d3.easeBounceOut)
-      .attr('transform', (d) => {
-        if (selected) {
-          let dist = 3;
-          let midAngle = ((nextProps.sector.endAngle - nextProps.sector.startAngle) / 2) + nextProps.sector.startAngle;
-          var x = Math.sin(midAngle) * dist;
-          var y = -Math.cos(midAngle) * dist;
-          return 'translate(' + x + ',' + y + ')';
-        } else {
-          return 'translate(0, 0)';
-        }
-      });
+      node.transition(this.onEnterTransition)
+        .ease(d3.easeBounceOut)
+        .attr('transform', (d) => {
+          if (selected) {
+            let dist = 3;
+            let midAngle = ((nextProps.sector.endAngle - nextProps.sector.startAngle) / 2) + nextProps.sector.startAngle;
+            var x = Math.sin(midAngle) * dist;
+            var y = -Math.cos(midAngle) * dist;
+            return 'translate(' + x + ',' + y + ')';
+          } else {
+            return 'translate(0, 0)';
+          }
+        });
+    }
   }
 
   render () {
@@ -103,8 +105,8 @@ class Sector extends React.Component {
     let textTransform = this.calculateTextTransform(this.props.sector);
 
     return (
-      <g 
-        onTouchTap={this.selectSector} 
+      <g
+        onTouchTap={this.selectSector}
         fillOpacity={this.state.fillOpacity}
         style={{cursor: 'pointer'}}
       >

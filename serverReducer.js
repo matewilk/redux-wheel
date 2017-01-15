@@ -38,4 +38,4 @@ module.exports = function sectors (state = {}, action) {
     default:
       return state;
   }
-}
+};
