@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactTransitionGroup from 'react-addons-transition-group';
-import { RaisedButton } from 'material-ui';
 import * as d3 from 'd3';
 
 import Sector from './Sector';
@@ -39,7 +38,7 @@ class Wheel extends React.Component {
 
     this.state = {
       actionOwner: false
-    }
+    };
   }
 
   componentDidMount () {
@@ -51,7 +50,7 @@ class Wheel extends React.Component {
     this.state.actionOwner = true;
 
     this.props.dispatch({
-      type: 'spinning.spin',
+      type: 'spinning.spin'
     });
   }
 
@@ -87,7 +86,7 @@ class Wheel extends React.Component {
       }
 
       this.calculateWheelRotationAngle();
-      this.requestAnimationFrameID = window.requestAnimationFrame(this.animateSpin); 
+      this.requestAnimationFrameID = window.requestAnimationFrame(this.animateSpin);
   }
 
   render () {

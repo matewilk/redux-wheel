@@ -17,9 +17,9 @@ export function sectorsMiddleware (store) {
         let actionParams = action;
 
         if (action.type === 'sectors.addSector') {
-          action.id = (Math.random() * (9999 - 10) + 10)
+          action.id = (Math.random() * (9999 - 10) + 10);
         }
-        
+
         socket.emit('client-emit', actionParams);
       }
 
@@ -31,7 +31,7 @@ export function sectorsMiddleware (store) {
           action.speed = Math.floor(Math.random() * (300 - 100 + 1)) + 100;
           action.owner = action.owner ? true : false;
         }
-        
+
         socket.emit('client-emit', actionParams);
       }
     }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Row, Col} from 'react-flexbox-grid/lib/index';
 
 import MainCard from './MainCard';
+import Progress from './Progress';
 
 class App extends React.Component {
   constructor () {
@@ -10,7 +11,7 @@ class App extends React.Component {
 
     this.state = {
       loaded: false
-    }
+    };
   }
 
   generateBoardId () {
@@ -21,7 +22,7 @@ class App extends React.Component {
       this.props.router.push(`/${boardId}`);
       return boardId;
     }
-    
+
   }
 
   componentDidMount () {
@@ -36,7 +37,7 @@ class App extends React.Component {
     });
 
     socket.on('sync', (syncData) => {
-      // this.setState({loaded: true});
+      this.setState({loaded: true});
 
       this.props.dispatch({
         type: 'spinning.sync',
@@ -57,11 +58,11 @@ class App extends React.Component {
   }
 
   render () {
-    // let comp = this.state.loaded ? <MainCard /> : 'Loading ...';
+    let component = this.state.loaded ? <MainCard /> : <Progress />;
     return (
       <Row center='xs'>
         <Col xs={12} sm={10} md={10} lg={8}>
-          <MainCard />
+          {component}
         </Col>
       </Row>
     );
