@@ -58,6 +58,22 @@ class Wheel extends React.Component {
     if (nextProps.spinning.speed > 0) {
       this.spin();
     }
+
+    if (this.props.spinning.inMotion && !nextProps.spinning.inMotion) {
+      this.calculateSelectedValue(nextProps.spinning.theta);
+    }
+  }
+
+  calculateSelectedValue (theta) {
+    let sectorsCount = this.props.sectors.length;
+    // +0.5 because value selector is at the bottom of the wheel
+    let rotations = (theta / 360) + 0.5;
+    let fraction = (rotations % 1) * 360;
+    let displacement = (fraction / (360 / sectorsCount));
+    let sector = sectorsCount - 1 - Math.floor(displacement);
+
+    let value = this.props.sectors[sector].name;
+    console.log(value);
   }
 
   spin () {
@@ -110,6 +126,14 @@ class Wheel extends React.Component {
             })}
           </ReactTransitionGroup>
         </g>
+        <path
+          d='M 50,5 95,97.5 5,97.5 z'
+          transform='scale(0.1) translate(450, 900)'
+          fill='rgb(255, 64, 129)'
+          strokeWidth='6'
+          strokeLinejoin='round'
+          stroke='white'
+        />
       </svg>
     );
   }

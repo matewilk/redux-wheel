@@ -79,7 +79,7 @@ class SectorForm extends React.Component {
       label='Update'
       fullWidth={true}
       onTouchTap={this.editSector}
-      disabled={wheelInMotion}
+      disabled={this.props.form.value === '' || wheelInMotion}
     />;
 
     let actionButton = selected ? EditButton : AddButton;
