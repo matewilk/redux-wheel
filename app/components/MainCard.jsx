@@ -10,7 +10,7 @@ class MainCard extends React.Component {
   render () {
     return (
       <div>
-        <Card style={{textAlign: 'initial'}}>
+        <Card style={{textAlign: 'initial'}} className='glamorous-card'>
           <CardHeader
             title='Try your luck'
             subtitle='Spin the wheel'

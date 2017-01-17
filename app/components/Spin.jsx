@@ -37,13 +37,26 @@ class Spin extends React.Component {
   }
 
   render () {
+    let text = this.props.value ? this.props.value : 'Spin!';
+    let textTransform = this.props.rotAngle
+      ? `rotate(${180 - this.props.rotAngle}) scale(1.4)`
+      : 'rotate(0)';
+
     return (
       <g
         onTouchTap={this.state.hidden ? null : this.props.spinHandler}
         style={{cursor: this.state.hidden ? 'inherit' : 'pointer'}}
       >
-        <circle ref='circle' r={this.radius} fill='rgba(94, 53, 177, 0.9)'/>
-        <text y='2%' fill='white' fontSize='6px' textAnchor="middle">Spin!</text>
+        <circle ref='circle' r={this.radius} fill='rgba(94, 53, 177, 0.9)' />
+        <text
+          y='2%'
+          fill='white'
+          fontSize='6px'
+          textAnchor='middle'
+          transform={textTransform}
+        >
+          {text}
+        </text>
       </g>
     );
   }

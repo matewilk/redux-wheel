@@ -37,7 +37,9 @@ class Wheel extends React.Component {
     this.calculateWheelRotationAngle = this.calculateWheelRotationAngle.bind(this);
 
     this.state = {
-      actionOwner: false
+      actionOwner: false,
+      value: null,
+      rotAngle: 0
     };
   }
 
@@ -68,12 +70,12 @@ class Wheel extends React.Component {
     let sectorsCount = this.props.sectors.length;
     // +0.5 because value selector is at the bottom of the wheel
     let rotations = (theta / 360) + 0.5;
-    let fraction = (rotations % 1) * 360;
-    let displacement = (fraction / (360 / sectorsCount));
+    let angle = (rotations % 1) * 360;
+    let displacement = (angle / (360 / sectorsCount));
     let sector = sectorsCount - 1 - Math.floor(displacement);
 
     let value = this.props.sectors[sector].name;
-    console.log(value);
+    this.setState({value: value, rotAngle: angle});
   }
 
   spin () {
@@ -110,7 +112,12 @@ class Wheel extends React.Component {
     return (
       <svg viewBox='0 0 100 100'>
         <g id='wheel' transform={transform}>
-          <Spin spinHandler={this.handleSpin} spinning={this.props.spinning} />
+          <Spin
+            spinHandler={this.handleSpin}
+            spinning={this.props.spinning}
+            value={this.state.value}
+            rotAngle={this.state.rotAngle}
+          />
           <ReactTransitionGroup component='g'>
             {this.pie(this.props.sectors).map((sector, index) => {
               return <Sector
