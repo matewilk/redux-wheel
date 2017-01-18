@@ -15,7 +15,7 @@ class MainCard extends React.Component {
             title='Try your luck'
             subtitle='Spin the wheel'
           />
-          <CardMedia style={{height: '50%', width: '50%', left: '25%'}}>
+          <CardMedia className='main-card-media'>
             <Wheel />
             <SectorForm />
             <BoardLink />
