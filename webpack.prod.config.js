@@ -2,10 +2,8 @@
 
 let path = require('path');
 
-let config = {
-  devtool: 'source-map',
+module.exports = {
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
     './app/index.jsx'
   ],
   output: {
@@ -32,10 +30,5 @@ let config = {
         include: /flexboxgrid/
       }
     ]
-  },
-  devServer: {
-    contentBase: './public'
   }
 };
-
-module.exports = config;

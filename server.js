@@ -1,10 +1,22 @@
 'use strict';
 
+let path = require('path');
+
 // http server
-let app = require('express')();
+let express = require('express');
+let app = express();
 let server = require('http').createServer(app);
 
-server.listen(3000, function () {
+// set static path
+app.use(express.static('public'));
+// enable html5 mode
+app.all('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+app.set('port', process.env.PORT || 3000);
+
+server.listen(app.get('port'), () => {
   console.log('Listenint on 3000');
 });
 

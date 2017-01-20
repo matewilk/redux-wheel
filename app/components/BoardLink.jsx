@@ -21,7 +21,7 @@ class BoardLink extends React.Component {
     this.setState({copied: true});
     setTimeout(() => {
       this.setState({copied: false});
-    }, 5000)
+    }, 5000);
   }
 
   render () {
@@ -34,20 +34,20 @@ class BoardLink extends React.Component {
     return (
       <Row>
         <Col xs={12}>
-          <Row center="xs">
+          <Row center='xs'>
             <Col xs={6}>
               <TextField
                 fullWidth={true}
-                value={`http://rinse.space/${this.props.form.boardId}`}
+                value={window.location.href}
                 floatingLabelText='Your Link'
                 disabled={false}
                 onChange={this.onChange}
                 inputStyle={Object.assign({}, style, {textAlign: 'center', fontSize: '13px'})}
               />
-              <CopyToClipboard 
+              <CopyToClipboard
                 text={this.props.form.link}
                 onCopy={this.onCopy}>
-                <RaisedButton 
+                <RaisedButton
                   icon={<CopyIcon />}
                   label={this.state.copied ? 'Copied' : 'Copy'}
                   labelStyle={style}
@@ -63,7 +63,7 @@ class BoardLink extends React.Component {
 
 function mapStateToProps (state) {
   return ({
-    form: state.form,
+    form: state.form
   });
 }
 
