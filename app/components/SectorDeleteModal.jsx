@@ -40,7 +40,7 @@ class DeleteModal extends React.Component {
       <RaisedButton
         label='Submit'
         keyboardFocused={true}
-        primary={true}
+        secondary={true}
         onTouchTap={this.removeSector}
       />
     ];

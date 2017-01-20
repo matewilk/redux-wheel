@@ -6,6 +6,7 @@ import { TextField, RaisedButton } from 'material-ui';
 class SectorForm extends React.Component {
   constructor (props) {
     super(props);
+
     this.modalDeleteShow = this.modalDeleteShow.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
     this.addSector = this.addSector.bind(this);
@@ -13,7 +14,11 @@ class SectorForm extends React.Component {
     this.isWheelInMotion = this.isWheelInMotion.bind(this);
   }
 
-  modalDeleteShow (event) {
+  handleSubmit (event) {
+    event.preventDefault();
+  }
+
+  modalDeleteShow () {
     this.props.dispatch({
       type: 'modal.modalDeleteToggle'
     });
@@ -27,6 +32,22 @@ class SectorForm extends React.Component {
 
   isWheelInMotion () {
     return this.props.spinning.inMotion;
+  }
+
+  formValidation () {
+    let maxLength = 30;
+    let value = this.props.form.value;
+    let error = '';
+
+    if (value.length > maxLength) {
+      error = `Maximum input length is 30 characters (currently ${value.length})`;
+    } else if (!(/^(\s*|[a-zA-Z0-9 _-]+)$/.test(value))) {
+      error = 'Must NOT contain special characters';
+    } else if (/\s\s/.test(value)) {
+      error = 'Must NOT containt multiple white spaces';
+    }
+
+    return error;
   }
 
   onValueChange (element, value) {
@@ -65,33 +86,36 @@ class SectorForm extends React.Component {
   }
 
   render () {
+    let value = this.props.form.value;
     let selected = this.isSectorSelected();
     let wheelInMotion = this.isWheelInMotion();
+    let error = this.formValidation();
 
     let AddButton = <RaisedButton
       label='Add'
       fullWidth={true}
       primary={true}
-      disabled={this.props.form.value === '' || wheelInMotion}
+      disabled={value === '' || wheelInMotion || error !== ''}
       onTouchTap={this.addSector}
     />;
     let EditButton = <RaisedButton
       label='Update'
       fullWidth={true}
       onTouchTap={this.editSector}
-      disabled={this.props.form.value === '' || wheelInMotion}
+      disabled={value === '' || wheelInMotion}
     />;
 
     let actionButton = selected ? EditButton : AddButton;
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <TextField
           fullWidth={true}
           hintText='50'
-          value={this.props.form.value}
+          value={value}
           floatingLabelText='Amount'
           onChange={this.onValueChange}
           disabled={wheelInMotion}
+          errorText={error}
         />
         <Row between='xs' style={{width: 'none', maxWidth: 'none'}}>
           <Col xs={6}>

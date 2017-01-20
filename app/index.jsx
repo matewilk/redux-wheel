@@ -27,12 +27,12 @@ let spinning = {
   speed: 0,
   theta: 0,
   inMotion: false
-}
+};
 
-const initial_state = { sectors, modal, form, spinning };
+const initialState = { sectors, modal, form, spinning };
 // create the store
 const createStoreWithMiddleware = applyMiddleware(sectorsMiddleware)(createStore);
-const store = createStoreWithMiddleware(reducers, initial_state);
+const store = createStoreWithMiddleware(reducers, initialState);
 
 let socket = io('http://localhost:3000');
 socketIO(store, socket);

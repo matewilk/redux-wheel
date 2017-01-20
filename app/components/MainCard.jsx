@@ -12,8 +12,8 @@ class MainCard extends React.Component {
       <div>
         <Card style={{textAlign: 'initial'}} className='glamorous-card'>
           <CardHeader
-            title='Try your luck'
-            subtitle='Spin the wheel'
+            title='Spin'
+            subtitle='try your luck'
           />
           <CardMedia className='main-card-media'>
             <Wheel />

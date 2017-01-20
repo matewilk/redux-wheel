@@ -1,21 +1,21 @@
 export default function modal (state = {}, action) {
-  let new_state;
+  let newState;
   switch (action.type) {
     case 'form.valueChange':
-      new_state = JSON.parse(JSON.stringify(state));
-      new_state.value = action.value;
+      newState = JSON.parse(JSON.stringify(state));
+      newState.value = action.value;
 
-      return new_state;
+      return newState;
     case 'form.valueEdit':
-      new_state = JSON.parse(JSON.stringify(state));
-      new_state.value = action.sector;
+      newState = JSON.parse(JSON.stringify(state));
+      newState.value = action.sector;
 
-      return new_state;
+      return newState;
     case 'form.setBoardId':
-      new_state = JSON.parse(JSON.stringify(state));
-      new_state.boardId = action.boardId;
+      newState = JSON.parse(JSON.stringify(state));
+      newState.boardId = action.boardId;
 
-      return new_state;
+      return newState;
     default:
       return state;
   }
