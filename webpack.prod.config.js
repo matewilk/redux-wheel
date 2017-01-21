@@ -25,9 +25,12 @@ module.exports = {
         }
       },
       {
+        test: /\.(woff|woff2|ttf|eot|svg)(\?]?.*)?$/,
+        loader: 'file-loader?name=fonts/[name].[ext]?[hash]'
+      },
+      {
         test: /\.css$/,
-        loader: 'style!css?modules',
-        include: /flexboxgrid/
+        loader: 'style!css?modules'
       }
     ]
   }

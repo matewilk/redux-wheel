@@ -27,9 +27,12 @@ let config = {
         }
       },
       {
+        test: /\.(png|woff|woff2|ttf|eot|svg)(\?]?.*)?$/,
+        loader: 'url?limit=10000'
+      },
+      {
         test: /\.css$/,
-        loader: 'style!css?modules',
-        include: /flexboxgrid/
+        loader: 'style!css?modules'
       }
     ]
   },

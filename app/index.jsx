@@ -5,6 +5,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import '../public/styles/global.css';
+
 import App from './components/App';
 import { reducers } from './reducers/index';
 
@@ -34,7 +36,7 @@ const initialState = { sectors, modal, form, spinning };
 const createStoreWithMiddleware = applyMiddleware(sectorsMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducers, initialState);
 
-let socket = io('http://localhost:3000');
+let socket = io(`http://${window.location.hostname}:3000`);
 socketIO(store, socket);
 
 // render the main component
