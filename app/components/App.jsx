@@ -19,10 +19,9 @@ class App extends React.Component {
       return this.props.params.boardId;
     } else {
       let boardId = Math.random().toString(36).substring(2, 7);
-      this.props.router.push(`/${boardId}`);
+      history.pushState({}, '', boardId);
       return boardId;
     }
-
   }
 
   componentDidMount () {
