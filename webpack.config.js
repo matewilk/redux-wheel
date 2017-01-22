@@ -37,7 +37,10 @@ let config = {
     ]
   },
   devServer: {
-    contentBase: './public'
+    contentBase: './public',
+    proxy: {
+      '*': 'http://localhost:3000'
+    }
   }
 };
 

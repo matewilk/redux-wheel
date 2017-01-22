@@ -17,7 +17,7 @@ app.all('/*', function (req, res) {
 app.set('port', process.env.PORT || 3000);
 
 server.listen(app.get('port'), () => {
-  console.log('Listenint on 3000');
+  console.log(`Listening on ${app.get('port')}`);
 });
 
 // app logic
