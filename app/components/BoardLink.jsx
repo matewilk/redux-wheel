@@ -4,6 +4,7 @@ import { Row, Col } from 'react-flexbox-grid/lib/index';
 import { TextField, RaisedButton } from 'material-ui';
 import CopyIcon from 'material-ui/svg-icons/content/content-copy';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import ReactGA from 'react-ga';
 
 class BoardLink extends React.Component {
   constructor () {
@@ -18,6 +19,11 @@ class BoardLink extends React.Component {
   onChange (element, value) {}
 
   onCopy () {
+    ReactGA.event({
+      category: 'BoardLink',
+      action: 'Copy Link'
+    });
+
     this.setState({copied: true});
     setTimeout(() => {
       this.setState({copied: false});

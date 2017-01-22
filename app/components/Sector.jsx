@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as d3 from 'd3';
+import ReactGA from 'react-ga';
 
 class Sector extends React.Component {
   constructor (props) {
@@ -32,6 +33,11 @@ class Sector extends React.Component {
       let sectorId = sector.id;
       let selected = sector.selected;
       let name = sector.name;
+
+      ReactGA.event({
+        category: 'Sector',
+        action: 'Select'
+      });
 
       this.props.dispatch({
         type: 'sectors.selectSector',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dialog, RaisedButton } from 'material-ui';
 import { connect } from 'react-redux';
+import ReactGA from 'react-ga';
 
 class DeleteModal extends React.Component {
   constructor () {
@@ -11,12 +12,22 @@ class DeleteModal extends React.Component {
   }
 
   handleClose () {
+    ReactGA.event({
+      category: 'DeleteSectorModel',
+      action: 'Dismiss'
+    });
+
     this.props.dispatch({
       type: 'modal.modalDeleteToggle'
     });
   }
 
   removeSector () {
+    ReactGA.event({
+      category: 'DeleteSectorModel',
+      action: 'Confirm Remove'
+    });
+
     this.props.dispatch({
       type: 'sectors.removeSector',
       sectors: this.props.sectors

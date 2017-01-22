@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid/lib/index';
 import { TextField, RaisedButton } from 'material-ui';
+import ReactGA from 'react-ga';
 
 class SectorForm extends React.Component {
   constructor (props) {
@@ -19,6 +20,11 @@ class SectorForm extends React.Component {
   }
 
   modalDeleteShow () {
+    ReactGA.event({
+      category: 'SectorForm',
+      action: 'Remove'
+    });
+
     this.props.dispatch({
       type: 'modal.modalDeleteToggle'
     });
@@ -58,11 +64,18 @@ class SectorForm extends React.Component {
   }
 
   addSector () {
+    ReactGA.event({
+      category: 'SectorForm',
+      action: 'Add',
+      value: parseInt(this.props.form.value)
+    });
+
     this.props.dispatch({
       type: 'sectors.addSector',
       value: this.props.form.value,
       sectors: this.props.sectors
     });
+
     this.props.dispatch({
       type: 'form.valueChange',
       value: ''
@@ -70,6 +83,12 @@ class SectorForm extends React.Component {
   }
 
   editSector () {
+    ReactGA.event({
+      category: 'SectorForm',
+      action: 'Edit',
+      value: parseInt(this.props.form.value)
+    });
+
     this.props.dispatch({
       type: 'sectors.editSector',
       value: this.props.form.value,

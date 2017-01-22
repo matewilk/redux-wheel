@@ -7,6 +7,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import '../public/styles/global.css';
 
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-90673948-1');
+
 import App from './components/App';
 import { reducers } from './reducers/index';
 
@@ -31,6 +34,11 @@ let spinning = {
   inMotion: false
 };
 
+let initGA = () => {
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview(window.location.pathname);
+};
+
 const initialState = { sectors, modal, form, spinning };
 // create the store
 const createStoreWithMiddleware = applyMiddleware(sectorsMiddleware)(createStore);
@@ -43,7 +51,7 @@ socketIO(store, socket);
 ReactDOM.render(
   <MuiThemeProvider>
     <Provider store={store}>
-      <Router history={browserHistory}>
+      <Router onUpdate={initGA} history={browserHistory}>
         <Route path='/(:boardId)' socket={socket} component={App} />
       </Router>
     </Provider>

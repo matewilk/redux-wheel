@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import * as d3 from 'd3';
+import ReactGA from 'react-ga';
 
 import Sector from './Sector';
 import Spin from './Spin';
@@ -51,6 +52,11 @@ class Wheel extends React.Component {
   handleSpin () {
     this.state.actionOwner = true;
 
+    ReactGA.event({
+      category: 'Wheel',
+      action: 'Spin'
+    });
+
     this.props.dispatch({
       type: 'spinning.spin'
     });
@@ -76,6 +82,12 @@ class Wheel extends React.Component {
 
     let value = this.props.sectors[sector].name;
     this.setState({value: value, rotAngle: angle});
+
+    ReactGA.event({
+      category: 'Wheel',
+      action: 'Spin Stop',
+      value: parseInt(value)
+    });
   }
 
   spin () {
