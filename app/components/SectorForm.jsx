@@ -40,6 +40,21 @@ class SectorForm extends React.Component {
     return this.props.spinning.inMotion;
   }
 
+  sectorsValidation () {
+    let isValid = true;
+    if (this.props.sectors.length >= 10) {
+      isValid = false;
+
+      this.props.dispatch({
+        type: 'modal.alertModalToggle',
+        message: `Sorry, only 10 sectors allowed in this version.
+          You can still remove or edit existing sectors.`
+      });
+    }
+
+    return isValid;
+  }
+
   formValidation () {
     let maxLength = 30;
     let value = this.props.form.value;
@@ -70,11 +85,13 @@ class SectorForm extends React.Component {
       value: parseInt(this.props.form.value)
     });
 
-    this.props.dispatch({
-      type: 'sectors.addSector',
-      value: this.props.form.value,
-      sectors: this.props.sectors
-    });
+    if (this.sectorsValidation()) {
+      this.props.dispatch({
+        type: 'sectors.addSector',
+        value: this.props.form.value,
+        sectors: this.props.sectors
+      });
+    }
 
     this.props.dispatch({
       type: 'form.valueChange',

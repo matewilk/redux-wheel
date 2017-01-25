@@ -5,6 +5,7 @@ import Wheel from './Wheel';
 import SectorForm from './SectorForm';
 import BoardLink from './BoardLink';
 import SectorDeleteModal from './SectorDeleteModal';
+import AlertModal from './AlertModal';
 
 class MainCard extends React.Component {
   render () {
@@ -23,6 +24,7 @@ class MainCard extends React.Component {
           <CardActions />
         </Card>
         <SectorDeleteModal />
+        <AlertModal />
       </div>
     );
   }

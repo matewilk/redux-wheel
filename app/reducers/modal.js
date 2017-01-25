@@ -1,10 +1,17 @@
 export default function modal (state = {}, action) {
-  let new_state;
+  let newState;
   switch (action.type) {
     case 'modal.modalDeleteToggle':
-      new_state = JSON.parse(JSON.stringify(state));
-      new_state.open = !new_state.open;
-      return new_state;
+      newState = JSON.parse(JSON.stringify(state));
+      newState.delete.open = !newState.delete.open;
+
+      return newState;
+    case 'modal.alertModalToggle':
+      newState = JSON.parse(JSON.stringify(state));
+      newState.alert.open = !newState.alert.open;
+      newState.alert.message = action.message;
+
+      return newState;
     default:
       return state;
   }

@@ -22,7 +22,13 @@ injectTapEventPlugin();
 
 let sectors = [];
 let modal = {
-  open: false
+  delete: {
+    open: false
+  },
+  alert: {
+    open: false,
+    message: ''
+  }
 };
 let form = {
   value: '',

@@ -61,7 +61,7 @@ class DeleteModal extends React.Component {
         title='Delete section'
         actions={actions}
         modal={true}
-        open={this.props.modal.open}
+        open={this.props.modal.delete.open}
       >
       Are you sure you want to delete the section ?
       </Dialog>

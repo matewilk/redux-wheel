@@ -63,6 +63,32 @@ let setCurrentTheta = (boardId, theta) => {
   }
 };
 
+let validateSectors = (sectors) => {
+  let isValid = true;
+  if (sectors.length >= 10) {
+    isValid = false;
+  }
+
+  return isValid;
+};
+
+let validateValue = (value) => {
+  let maxLength = 30;
+  let isValid = true;
+
+  if (value) {
+    if (value.length > maxLength) {
+      isValid = false;
+    } else if (!(/^(\s*|[a-zA-Z0-9 _-]+)$/.test(value))) {
+      isValid = false;
+    } else if (/\s\s/.test(value)) {
+      isValid = false;
+    }
+  }
+
+  return isValid;
+};
+
 // socket events
 let io = require('socket.io')(server);
 let serverReducer = require('./serverReducer');
@@ -88,10 +114,20 @@ io.sockets.on('connection', function (socket) {
       setCurrentTheta(board, params.theta);
     }
 
-    // save current board's sectors state
-    boards[params.boardId].sectors = serverReducer(boards[params.boardId].sectors, params);
+    // validate coming values
+    let sectorsValid = true;
+    if (params.type.match(/sectors.add.*/)) {
+      sectorsValid = validateSectors(boards[params.boardId].sectors);
+    }
+    let valueValid = validateValue(params.value);
 
-    io.sockets.in(board).emit('server-emit', params);
+    if (params.type.match(/^(?=spinning).*$/) || (sectorsValid && valueValid)) {
+      // update current board state
+      boards[params.boardId].sectors = serverReducer(boards[params.boardId].sectors, params);
+
+      // broadcast change
+      io.sockets.in(board).emit('server-emit', params);
+    }
   });
 
   socket.on('disconnect', () => {
