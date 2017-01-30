@@ -33,7 +33,7 @@ class AlertModal extends React.Component {
 
     return (
       <Dialog
-        title='Alert'
+        title='Oops'
         actions={actions}
         modal={true}
         open={this.props.modal.alert.open}

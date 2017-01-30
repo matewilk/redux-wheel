@@ -6,6 +6,7 @@ import SectorForm from './SectorForm';
 import BoardLink from './BoardLink';
 import SectorDeleteModal from './SectorDeleteModal';
 import AlertModal from './AlertModal';
+import SocialShare from './SocialShare';
 
 class MainCard extends React.Component {
   render () {
@@ -15,7 +16,9 @@ class MainCard extends React.Component {
           <CardHeader
             title='Spin'
             subtitle='try your luck'
-          />
+          >
+            <SocialShare />
+          </CardHeader>
           <CardMedia className='main-card-media'>
             <Wheel />
             <SectorForm />

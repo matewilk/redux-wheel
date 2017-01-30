@@ -29,3 +29,18 @@ body {
       left: 25%;
     }
 }
+
+.twitter-share-button-container {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  cursor: pointer
+}
+
+.twitter-share-button-container .share-text {
+  cursor: default;
+  position: absolute;
+  right: 37px;
+  top: -7px;
+  z-index: 0;
+}
