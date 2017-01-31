@@ -2,7 +2,6 @@ import React from 'react';
 import { Dialog, RaisedButton, Subheader } from 'material-ui';
 import { Row, Col } from 'react-flexbox-grid/lib/index';
 import ReactGA from 'react-ga';
-import Helmet from 'react-helmet';
 
 import {
   ShareButtons,
