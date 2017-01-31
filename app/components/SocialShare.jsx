@@ -2,6 +2,7 @@ import React from 'react';
 import { Dialog, RaisedButton, Subheader } from 'material-ui';
 import { Row, Col } from 'react-flexbox-grid/lib/index';
 import ReactGA from 'react-ga';
+import Helmet from 'react-helmet';
 
 import {
   ShareButtons,
@@ -14,6 +15,12 @@ class SocialShare extends React.Component {
     super();
   }
 
+  componentDidMount () {
+    window.twttr.ready((twtr) => {
+      twtr.widgets.load()
+    });
+  }
+
   render () {
     const {
       TwitterShareButton
@@ -23,18 +30,25 @@ class SocialShare extends React.Component {
     let shareUrl = 'http://rinsify.com';
     let title = 'Spin up your addiction - ';
     return (
-      <div className='twitter-share-button-container'>
-        <div className='share-text'>
-          <Subheader >share</Subheader>
+      <div>
+        <div className='twitter-share-button-container'>
+          <a
+            href="https://twitter.com/share"
+            className="twitter-share-button"
+            data-show-count="false"
+          >
+            Tweet
+          </a>
         </div>
-        <TwitterShareButton
-          url={shareUrl}
-          title={title}
-          hashtags={['test', 'test2']}>
-          <TwitterIcon
-            size={32}
-            round />
-        </TwitterShareButton>
+        <div style={{position: 'absolute', right: '16px'}}>
+          <a
+            href="https://twitter.com/rinsify"
+            className="twitter-follow-button"
+            data-show-count="false"
+          >
+            Follow @rinsify
+          </a>
+        </div>
       </div>
     );
   }
