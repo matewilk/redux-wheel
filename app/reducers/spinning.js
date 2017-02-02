@@ -17,6 +17,13 @@ export default function modal (state = {}, action) {
       newState.theta = action.theta;
 
       return newState;
+    case 'spinning.stopAndSync':
+        newState = JSON.parse(JSON.stringify(state));
+        newState.stopAndSync = !action.stopAndSync;
+        newState.theta = action.theta;
+        newState.speed = 0;
+
+        return newState;
     default:
       return state;
   }

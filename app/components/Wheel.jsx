@@ -113,6 +113,25 @@ class Wheel extends React.Component {
       this.state.actionOwner = false;
 
       return;
+    } else if (this.props.spinning.stopAndSync) {
+      clearInterval(this.requestAnimationFrameID);
+
+      this.props.dispatch({
+        type: 'spinning.stopAndSync',
+        theta: this.props.spinning.theta,
+        stopAndSync: true
+      });
+
+      this.props.dispatch({
+        type: 'spinning.stop',
+      });
+
+      this.props.dispatch({
+        type: 'spinning.sync',
+        theta: this.props.spinning.theta,
+      });
+
+      return;
     }
 
     this.calculateWheelRotationAngle();

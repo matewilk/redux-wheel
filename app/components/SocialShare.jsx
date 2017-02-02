@@ -3,12 +3,6 @@ import { Dialog, RaisedButton, Subheader } from 'material-ui';
 import { Row, Col } from 'react-flexbox-grid/lib/index';
 import ReactGA from 'react-ga';
 
-import {
-  ShareButtons,
-  ShareCounts,
-  generateShareIcon
-} from 'react-share';
-
 class SocialShare extends React.Component {
   constructor () {
     super();
@@ -21,11 +15,6 @@ class SocialShare extends React.Component {
   }
 
   render () {
-    const {
-      TwitterShareButton
-    } = ShareButtons;
-    const TwitterIcon = generateShareIcon('twitter');
-
     let shareUrl = 'http://rinsify.com';
     let title = 'Spin up your addiction - ';
     return (
@@ -34,6 +23,10 @@ class SocialShare extends React.Component {
           <a
             href="https://twitter.com/share"
             className="twitter-share-button"
+            data-text="Spin up your addiction"
+            data-url="http://rinsify.com"
+            data-hashtags="rinsinggame,findom,sub,walletrape"
+            data-via="rinsify"
             data-show-count="false"
           >
             Tweet

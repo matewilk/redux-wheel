@@ -43,9 +43,17 @@ export function sectorsMiddleware (store) {
 export default function (store, socketio) {
   socket = socketio;
 
+  let stopAndSync = (action) => {
+    if (document.hidden && action.type === 'spinning.stop') {
+      action.type = 'spinning.stopAndSync';
+      store.dispatch(action);
+    }
+  }
+
   socket.on('server-emit', actionParams => {
     let type, params;
     let action = { type, ...params } = actionParams;
+    stopAndSync(action);
     action.type = `${type}Local`;
     store.dispatch(action);
   });
