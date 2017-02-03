@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Card, CardHeader, CardMedia, CardActions } from 'material-ui';
 import { FloatingActionButton } from 'material-ui';
 import HelpOutline from 'material-ui/svg-icons/action/help-outline'
+import ReactGA from 'react-ga';
 
 import Wheel from './Wheel';
 import SectorForm from './SectorForm';
@@ -20,6 +21,11 @@ class MainCard extends React.Component {
   }
 
   showWelcomeDialog () {
+    ReactGA.event({
+      category: 'MainCard',
+      action: 'showWelcomeDialog'
+    });
+
     this.props.dispatch({
       type: 'modal.welcomeDialogToggle'
     });
