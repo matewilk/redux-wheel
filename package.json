@@ -18,7 +18,6 @@
     "material-ui": "^0.16.1",
     "react": "^15.3.2",
     "react-addons-transition-group": "^15.3.2",
-    "react-cookie": "^1.0.4",
     "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "^15.3.2",
     "react-flexbox-grid": "^0.10.2",

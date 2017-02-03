@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Card, CardHeader, CardMedia, CardActions } from 'material-ui';
 import { FloatingActionButton } from 'material-ui';
 import HelpOutline from 'material-ui/svg-icons/action/help-outline'
@@ -12,6 +13,18 @@ import WelcomeDialog from './WelcomeDialog';
 import SocialShare from './SocialShare';
 
 class MainCard extends React.Component {
+  constructor () {
+    super();
+
+    this.showWelcomeDialog = this.showWelcomeDialog.bind(this);
+  }
+
+  showWelcomeDialog () {
+    this.props.dispatch({
+      type: 'modal.welcomeDialogToggle'
+    });
+  }
+
   render () {
     return (
       <div>
@@ -28,7 +41,7 @@ class MainCard extends React.Component {
             <BoardLink />
           </CardMedia>
           <CardActions>
-            <FloatingActionButton mini={true}>
+            <FloatingActionButton mini={true} onTouchTap={this.showWelcomeDialog}>
               <HelpOutline />
             </FloatingActionButton>
           </CardActions>
@@ -41,4 +54,4 @@ class MainCard extends React.Component {
   }
 }
 
-export default MainCard;
+export default connect()(MainCard);

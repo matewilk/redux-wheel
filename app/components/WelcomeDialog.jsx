@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dialog, RaisedButton } from 'material-ui';
-import { TextField, Divider } from 'material-ui';
+import { TextField, Divider, ListItem } from 'material-ui';
 import { connect } from 'react-redux';
 import ReactGA from 'react-ga';
 
@@ -34,54 +34,35 @@ class WelcomeDialog extends React.Component {
 
     return (
       <Dialog
-        title='Welcom to rinsify (beta version)'
+        title={
+          <div>
+          <div>Welcom to rinsify (beta version)</div>
+          <div style={{color: 'rgba(0, 0, 0, 0.6)', fontSize: '0.75em'}}>
+            rinsify is a free online rinsing game made in contribution to FemDom community.
+          </div>
+          </div>
+        }
         actions={actions}
         modal={false}
+        autoScrollBodyContent={true}
+        onRequestClose={this.handleClose}
         open={this.props.modal.welcome.open}
       >
-        <div>rinsify is a free online rinsing game made in contribution to FemDom community.</div>
-        <TextField
-          hintText=""
-          underlineShow={false}
-          disabled={true}
-          fullWidth={true} />
         <Divider />
-        <TextField
-          hintText="Set up your wheel of (miss)fortune"
-          underlineShow={false}
-          disabled={true}
-          fullWidth={true} />
+        <ListItem>Set up your wheel of (miss)fortune</ListItem>
         <Divider />
-        <TextField
-          hintText="Copy the link to your wheel by clicking Copy button at the bottom of the page"
-          underlineShow={false}
-          disabled={true}
-          fullWidth={true} />
+        <ListItem>Copy the link to your wheel by clicking Copy button at the bottom of the page</ListItem>
         <Divider />
-        <TextField
-          hintText="Share the link with whom you want to start the #rinsinggame"
-          underlineShow={false}
-          disabled={true}
-          fullWidth={true} />
+        <ListItem>Share the link with whom you want to start the #rinsinggame</ListItem>
         <Divider />
-        <TextField
-          hintText="Rinse or be rinsed!"
-          underlineShow={false}
-          disabled={true}
-          fullWidth={true} />
+        <ListItem>Play on any device, mobile, tablet, PC or TV</ListItem>
         <Divider />
-        <TextField
-          hintText=""
-          underlineShow={false}
-          disabled={true}
-          fullWidth={true} />
-        <TextField
-            style={{"fontSize": '0.75em'}}
-            hintText="This is a beta version, if you minimise the browser window or switch between tabs while the wheel is spinning,
-              it can get out of sync with other players. In that case, simply refresh the page."
-            underlineShow={false}
-            disabled={true}
-            fullWidth={true} />
+        <ListItem>Rinse or be rinsed!</ListItem>
+        <Divider />
+        <ListItem style={{fontSize: '0.75em'}}>
+          This is a beta version, if you minimise the browser window or switch between tabs while the wheel is spinning,
+          it can get out of sync with other players. If it was the case, simply refresh the page.
+        </ListItem>
       </Dialog>
     );
   }
