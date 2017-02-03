@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Row, Col} from 'react-flexbox-grid/lib/index';
+import cookie from 'react-cookie';
 
 import MainCard from './MainCard';
 import Progress from './Progress';
@@ -10,7 +11,8 @@ class App extends React.Component {
     super();
 
     this.state = {
-      loaded: false
+      loaded: false,
+      cookie: undefined
     };
   }
 
@@ -48,6 +50,14 @@ class App extends React.Component {
         sectors: syncData.sectors
       });
     });
+  }
+
+  componentDidUpdate (nextProps, nextState) {
+    if(cookie.load('rinsify') === undefined) {
+      this.props.dispatch({
+        type: 'modal.welcomeDialogToggle'
+      });
+    }
   }
 
   componentWillReceiveProps (nextProps) {

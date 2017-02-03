@@ -25,9 +25,11 @@ class SectorForm extends React.Component {
       action: 'Remove'
     });
 
-    this.props.dispatch({
-      type: 'modal.modalDeleteToggle'
-    });
+    if (this.removeSectorsValidation()) {
+      this.props.dispatch({
+        type: 'modal.modalDeleteToggle'
+      });
+    };
   }
 
   isSectorSelected () {
@@ -40,7 +42,7 @@ class SectorForm extends React.Component {
     return this.props.spinning.inMotion;
   }
 
-  sectorsValidation () {
+  addSectorsValidation () {
     let isValid = true;
     if (this.props.sectors.length >= 10) {
       isValid = false;
@@ -49,6 +51,21 @@ class SectorForm extends React.Component {
         type: 'modal.alertModalToggle',
         message: `Sorry, only 10 sectors allowed in this version.
           You can still remove or edit existing sectors.`
+      });
+    }
+
+    return isValid;
+  }
+
+  removeSectorsValidation () {
+    let isValid = true;
+    if (this.props.sectors.length <= 2) {
+      isValid = false;
+
+      this.props.dispatch({
+        type: 'modal.alertModalToggle',
+        message: `Sorry, at least 2 sectors required.
+          You can still add or edit existing sectors.`
       });
     }
 
@@ -85,7 +102,7 @@ class SectorForm extends React.Component {
       value: parseInt(this.props.form.value)
     });
 
-    if (this.sectorsValidation()) {
+    if (this.addSectorsValidation()) {
       this.props.dispatch({
         type: 'sectors.addSector',
         value: this.props.form.value,

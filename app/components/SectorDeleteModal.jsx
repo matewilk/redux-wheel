@@ -63,7 +63,7 @@ class DeleteModal extends React.Component {
         modal={true}
         open={this.props.modal.delete.open}
       >
-      Are you sure you want to delete the section ?
+      Are you sure you want to remove the sector ?
       </Dialog>
     );
   }

@@ -22,6 +22,9 @@ injectTapEventPlugin();
 
 let sectors = [];
 let modal = {
+  welcome: {
+    open: false
+  },
   delete: {
     open: false
   },

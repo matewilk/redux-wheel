@@ -1,11 +1,14 @@
 import React from 'react';
-import {Card, CardHeader, CardMedia, CardActions} from 'material-ui';
+import { Card, CardHeader, CardMedia, CardActions } from 'material-ui';
+import { FloatingActionButton } from 'material-ui';
+import HelpOutline from 'material-ui/svg-icons/action/help-outline'
 
 import Wheel from './Wheel';
 import SectorForm from './SectorForm';
 import BoardLink from './BoardLink';
 import SectorDeleteModal from './SectorDeleteModal';
 import AlertModal from './AlertModal';
+import WelcomeDialog from './WelcomeDialog';
 import SocialShare from './SocialShare';
 
 class MainCard extends React.Component {
@@ -14,8 +17,8 @@ class MainCard extends React.Component {
       <div>
         <Card style={{textAlign: 'initial'}} className='glamorous-card'>
           <CardHeader
-            title='Spin'
-            subtitle='try your luck'
+            title='Rinsify'
+            subtitle='Spin up the addiction'
           >
             <SocialShare />
           </CardHeader>
@@ -24,10 +27,15 @@ class MainCard extends React.Component {
             <SectorForm />
             <BoardLink />
           </CardMedia>
-          <CardActions />
+          <CardActions>
+            <FloatingActionButton mini={true}>
+              <HelpOutline />
+            </FloatingActionButton>
+          </CardActions>
         </Card>
         <SectorDeleteModal />
         <AlertModal />
+        <WelcomeDialog />
       </div>
     );
   }

@@ -41,7 +41,7 @@ class BoardLink extends React.Component {
       <Row>
         <Col xs={12}>
           <Row center='xs'>
-            <Col xs={6}>
+            <Col xs={8}>
               <TextField
                 fullWidth={true}
                 value={window.location.href}
@@ -51,7 +51,7 @@ class BoardLink extends React.Component {
                 inputStyle={Object.assign({}, style, {textAlign: 'center', fontSize: '13px'})}
               />
               <CopyToClipboard
-                text={this.props.form.link}
+                text={window.location.href}
                 onCopy={this.onCopy}>
                 <RaisedButton
                   icon={<CopyIcon />}

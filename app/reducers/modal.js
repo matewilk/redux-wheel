@@ -1,6 +1,11 @@
 export default function modal (state = {}, action) {
   let newState;
   switch (action.type) {
+    case 'modal.welcomeDialogToggle':
+      newState = JSON.parse(JSON.stringify(state));
+      newState.welcome.open = !newState.welcome.open;
+
+      return newState;
     case 'modal.modalDeleteToggle':
       newState = JSON.parse(JSON.stringify(state));
       newState.delete.open = !newState.delete.open;

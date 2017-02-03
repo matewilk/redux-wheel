@@ -35,7 +35,8 @@ let addBoard = (boardId) => {
 
     boards[boardId] = {
       theta: 0,
-      sectors: sectors
+      sectors: sectors,
+      created: new Date()
     };
   }
 };
@@ -66,6 +67,8 @@ let setCurrentTheta = (boardId, theta) => {
 let validateSectors = (sectors) => {
   let isValid = true;
   if (sectors.length >= 10) {
+    isValid = false;
+  } else if (sectors.length < 2) {
     isValid = false;
   }
 
