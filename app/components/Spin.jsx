@@ -37,7 +37,7 @@ class Spin extends React.Component {
   }
 
   render () {
-    let text = this.props.value ? this.props.value : 'Spin!';
+    let text = this.props.value ? `$${this.props.value}` : 'Spin!';
     let textTransform = this.props.rotAngle
       ? `rotate(${180 - this.props.rotAngle}) scale(1.4)`
       : 'rotate(0)';

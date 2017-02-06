@@ -44,3 +44,9 @@ body {
   top: -7px;
   z-index: 0;
 }
+
+.info-button-position {
+  z-index: 999;
+  position: absolute;
+  margin-left: -75px;
+}

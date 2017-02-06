@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dialog, RaisedButton } from 'material-ui';
-import { TextField, Divider, ListItem } from 'material-ui';
+import { Divider, ListItem } from 'material-ui';
 import { connect } from 'react-redux';
 import ReactGA from 'react-ga';
 
@@ -19,7 +19,7 @@ class WelcomeDialog extends React.Component {
     });
 
     this.props.dispatch({
-      type: 'modal.welcomeDialogToggle',
+      type: 'modal.welcomeDialogToggle'
     });
   }
 

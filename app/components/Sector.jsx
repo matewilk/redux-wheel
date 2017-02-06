@@ -126,7 +126,7 @@ class Sector extends React.Component {
           transform={textTransform}
           textAnchor='middle'
           fontSize='6px'>
-          {sector.name}
+          ${sector.name}
         </text>
       </g>
     );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardMedia, CardActions } from 'material-ui';
-import { FloatingActionButton } from 'material-ui';
-import HelpOutline from 'material-ui/svg-icons/action/help-outline'
+import { RaisedButton } from 'material-ui';
+import HelpOutline from 'material-ui/svg-icons/action/info-outline';
 import ReactGA from 'react-ga';
 
 import Wheel from './Wheel';
@@ -34,6 +34,15 @@ class MainCard extends React.Component {
   render () {
     return (
       <div>
+        <RaisedButton
+          className='info-button-position'
+          onTouchTap={this.showWelcomeDialog}
+          primary={true}
+          label='How to play'
+          labelPosition='before'
+          icon={<HelpOutline />}
+        >
+        </RaisedButton>
         <Card style={{textAlign: 'initial'}} className='glamorous-card'>
           <CardHeader
             title='Rinsify'
@@ -46,11 +55,7 @@ class MainCard extends React.Component {
             <SectorForm />
             <BoardLink />
           </CardMedia>
-          <CardActions>
-            <FloatingActionButton mini={true} onTouchTap={this.showWelcomeDialog}>
-              <HelpOutline />
-            </FloatingActionButton>
-          </CardActions>
+          <CardActions></CardActions>
         </Card>
         <SectorDeleteModal />
         <AlertModal />
