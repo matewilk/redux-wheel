@@ -38,7 +38,7 @@ class MainCard extends React.Component {
           className='info-button-position'
           onTouchTap={this.showWelcomeDialog}
           primary={true}
-          label='How to play'
+          label='How to'
           labelPosition='before'
           icon={<HelpOutline />}
         >

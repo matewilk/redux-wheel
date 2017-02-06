@@ -8,7 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import '../public/styles/global.css';
 
 import ReactGA from 'react-ga';
-ReactGA.initialize('UA-91332299-1');
+ReactGA.initialize('');
 
 import App from './components/App';
 import { reducers } from './reducers/index';

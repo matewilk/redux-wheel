@@ -4,7 +4,6 @@ import { Divider, ListItem } from 'material-ui';
 import { connect } from 'react-redux';
 import ReactGA from 'react-ga';
 
-
 class WelcomeDialog extends React.Component {
   constructor () {
     super();
@@ -37,7 +36,7 @@ class WelcomeDialog extends React.Component {
         title={
           <div>
           <div>Welcom to rinsify (beta version)</div>
-          <div style={{color: 'rgba(0, 0, 0, 0.6)', fontSize: '0.75em'}}>
+          <div style={{color: 'rgba(0, 0, 0, 0.6)', fontSize: '0.75em'}} className='xs-hide'>
             rinsify is a free online rinsing game made in contribution to FemDom community.
           </div>
           </div>

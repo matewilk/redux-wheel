@@ -12,6 +12,10 @@ body {
       width: 80%;
       left: 10%;
     }
+
+    .xs-hide {
+      display: none
+    }
 }
 
 @media all and (min-width: 768px) {
@@ -48,5 +52,5 @@ body {
 .info-button-position {
   z-index: 999;
   position: absolute;
-  margin-left: -75px;
+  margin-left: -56px;
 }
